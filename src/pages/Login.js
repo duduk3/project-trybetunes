@@ -27,8 +27,9 @@ class Login extends React.Component {
   }
 
   handleClick = async () => {
+    const { name } = this.state;
     this.setState({ loading: true });
-    await createUser(this.state);
+    await createUser({ name });
     this.isSaved();
   }
 
