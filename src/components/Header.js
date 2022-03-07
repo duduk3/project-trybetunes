@@ -40,13 +40,34 @@ class Header extends React.Component {
         </header>
         <section className="links-content">
           <div className="link-blocks">
-            <Link to="/search" data-testid="link-to-search">Link</Link>
+            <Link
+              to="/search"
+              className="link-text"
+              data-testid="link-to-search"
+            >
+              Link
+            </Link>
           </div>
+
           <div className="link-blocks">
-            <Link to="/favorites" data-testid="link-to-favorites">Favoritos</Link>
+            <Link
+              to="/favorites"
+              className="link-text"
+              data-testid="link-to-favorites"
+            >
+              Favoritos
+            </Link>
           </div>
+
           <div className="link-blocks">
-            <Link to="/profile" data-testid="link-to-profile">Profile</Link>
+            <Link
+              to="/profile"
+              className="link-text"
+              data-testid="link-to-profile"
+            >
+              Profile
+
+            </Link>
           </div>
         </section>
       </main>
