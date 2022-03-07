@@ -6,7 +6,7 @@ class Header extends React.Component {
     const response = await Promise.resolve(getUser());
     const result = response.name;
     console.log(result);
-    return 'wait';
+    return 'waiting';
   }
 
   render() {
