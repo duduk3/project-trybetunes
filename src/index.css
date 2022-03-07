@@ -12,8 +12,39 @@ code {
     monospace;
 }
 
+.container-app {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 200px;
+}
+
 .loading {
   align-items: center;
   display: flex;
   justify-content: center;
+  height: 48px;
+  width: 160px;
+  border-radius: 4%;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-login {
+  font-size: 20px;
+}
+
+.btn-login {
+  background-color: blue;
+  color: white;
+  font-size: 16px;
+  font-weight: 800;
+  margin: 5px;
+}
+
+.btn-login:disabled {
+  background-color: rgba(0, 0, 255, 0.377);
 }
