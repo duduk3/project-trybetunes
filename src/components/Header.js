@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { getUser } from '../services/userAPI';
 
 class Header extends React.Component {
@@ -23,19 +24,32 @@ class Header extends React.Component {
   render() {
     const { userName } = this.state;
     return (
-      <header
-        className="header-content"
-        data-testid="header-component"
-      >
-        <div className="user-name-content">
-          <div className="icon-user-name">
-            user
+      <main className="header-content colunm">
+        <header
+          className="header-content"
+          data-testid="header-component"
+        >
+          <div className="user-name-content">
+            <div className="icon-user-name">
+              user
+            </div>
+            <p className="text-user-name" data-testid="header-user-name">
+              {userName === '' ? <h4>Carregando...</h4> : userName }
+            </p>
           </div>
-          <p className="text-user-name" data-testid="header-user-name">
-            {userName === '' ? <h4>Carregando...</h4> : userName }
-          </p>
-        </div>
-      </header>
+        </header>
+        <section className="links-content">
+          <div className="link-blocks">
+            <Link to="/search" data-testid="link-to-search">Link</Link>
+          </div>
+          <div className="link-blocks">
+            <Link to="/favorites" data-testid="link-to-favorites">Favoritos</Link>
+          </div>
+          <div className="link-blocks">
+            <Link to="/profile" data-testid="link-to-profile">Profile</Link>
+          </div>
+        </section>
+      </main>
     );
   }
 }

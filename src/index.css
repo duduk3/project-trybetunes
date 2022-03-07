@@ -84,3 +84,24 @@ form {
   font-size: 16px;
   font-weight: 700;
 }
+
+.colunm {
+  display: flex;
+  flex-direction: column;
+}
+
+.links-content {
+  display: flex;
+  flex-direction: row;
+  margin-top: 70px;
+}
+
+.link-blocks {
+  width: 300px;
+  height: 32px;
+  color: #2FC18C;
+}
+
+.link-blocks:hover {
+  background-color: #036B52;
+}
