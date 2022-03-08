@@ -33,9 +33,9 @@ class Header extends React.Component {
             <div className="icon-user-name">
               user
             </div>
-            <p className="text-user-name" data-testid="header-user-name">
+            <div className="text-user-name" data-testid="header-user-name">
               {userName === '' ? <h4>Carregando...</h4> : userName }
-            </p>
+            </div>
           </div>
         </header>
         <section className="links-content">
