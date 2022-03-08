@@ -1,14 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { addSong } from '../services/favoriteSongsAPI';
+import Loading from './Loading';
 
 class MusicCard extends React.Component {
-  render() {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      loading: false,
+    };
+  }
+
+  handleCheck = async () => {
     const { data } = this.props;
+    this.setState({ loading: true });
+    const result = await addSong(data);
+    this.setState({ loading: false });
+    return result;
+  }
+
+  render() {
+    const { loading } = this.state;
+    const { data } = this.props;
+    const arrayMusics = [...data];
+    arrayMusics.shift();
     return (
       <div>
+        <div>{ loading && <Loading /> }</div>
         <section>
           <ul>
-            { data.map((music) => (
+            { arrayMusics.map((music) => (
               <li key={ music.trackId }>
                 <p>{ music.trackName }</p>
                 <audio
@@ -22,6 +44,16 @@ class MusicCard extends React.Component {
                   <code>audio</code>
                   .
                 </audio>
+                <label htmlFor={ `${music.trackId}` }>
+                  <input
+                    name={ `${music.trackId}` }
+                    id={ `${music.trackId}` }
+                    type="checkbox"
+                    onChange={ this.handleCheck }
+                    data-testid={ `checkbox-music-${music.trackId}` }
+                  />
+                  Favorita
+                </label>
               </li>
             ))}
           </ul>

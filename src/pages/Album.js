@@ -29,8 +29,6 @@ class Album extends React.Component {
 
   render() {
     const { loading, loaded, data } = this.state;
-    const arrayMusics = [...data];
-    arrayMusics.shift();
     return (
       <main data-testid="page-album">
         <Header />
@@ -44,7 +42,7 @@ class Album extends React.Component {
             </div>)}
           <section>
             <ul>
-              {loaded && <MusicCard data={ arrayMusics } /> }
+              {loaded && <MusicCard data={ data } /> }
             </ul>
           </section>
         </div>
