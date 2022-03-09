@@ -12,17 +12,21 @@ class MusicCard extends React.Component {
     };
   }
 
-  handleCheck = async () => {
-    const { data } = this.props;
+  handleCheck = async (music) => {
     this.setState({ loading: true });
-    const result = await addSong(data);
+    await addSong(music);
     this.setState({ loading: false });
-    return result;
+  }
+
+  checkTest = (music) => {
+    const { favorites } = this.props;
+    const checked = favorites.filter((e) => e.trackId === music.trackId);
+    if (checked) return true;
   }
 
   render() {
     const { loading } = this.state;
-    const { data } = this.props;
+    const { data, favorites } = this.props;
     const arrayMusics = [...data];
     arrayMusics.shift();
     return (
@@ -30,32 +34,43 @@ class MusicCard extends React.Component {
         <div>{ loading && <Loading /> }</div>
         <section>
           <ul>
-            { arrayMusics.map((music) => (
-              <li key={ music.trackId }>
-                <p>{ music.trackName }</p>
-                <audio
-                  data-testid="audio-component"
-                  src={ music.previewUrl }
-                  controls
-                >
-                  <track kind="captions" />
-                  O seu navegador não suporta o elemento
-                  {' '}
-                  <code>audio</code>
-                  .
-                </audio>
-                <label htmlFor={ `${music.trackId}` }>
-                  <input
-                    name={ `${music.trackId}` }
-                    id={ `${music.trackId}` }
-                    type="checkbox"
-                    onChange={ this.handleCheck }
-                    data-testid={ `checkbox-music-${music.trackId}` }
-                  />
-                  Favorita
-                </label>
-              </li>
-            ))}
+            { arrayMusics.map((music) => {
+              const checkTest = favorites.find((el) => {
+                let checkedFav;
+                if (el.trackId === music.trackId) {
+                  checkedFav = true;
+                } else { checkedFav = undefined; }
+                return checkedFav;
+              });
+              return (
+                <li key={ music.trackId }>
+                  <p>{ music.trackName }</p>
+                  <audio
+                    data-testid="audio-component"
+                    src={ music.previewUrl }
+                    controls
+                  >
+                    <track kind="captions" />
+                    O seu navegador não suporta o elemento
+                    {' '}
+                    <code>audio</code>
+                    .
+                  </audio>
+                  <label htmlFor={ `${music.trackId}` }>
+                    <input
+                      name={ `${music.trackId}` }
+                      id={ `${music.trackId}` }
+                      type="checkbox"
+                      onChange={ () => this.handleCheck(music) }
+                      value={ `${music.trackId}` }
+                      data-testid={ `checkbox-music-${music.trackId}` }
+                      checked={ checkTest }
+                    />
+                    Favorita
+                  </label>
+                </li>
+              );
+            })}
           </ul>
         </section>
       </div>);
@@ -64,7 +79,12 @@ class MusicCard extends React.Component {
 
 MusicCard.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape({
-    trackId: PropTypes.string.isRequired,
+    trackId: PropTypes.number.isRequired,
+    trackName: PropTypes.string.isRequired,
+    previewUrl: PropTypes.string.isRequired,
+  })).isRequired,
+  favorites: PropTypes.arrayOf(PropTypes.shape({
+    trackId: PropTypes.number.isRequired,
     trackName: PropTypes.string.isRequired,
     previewUrl: PropTypes.string.isRequired,
   })).isRequired,

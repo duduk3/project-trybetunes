@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import Loading from '../components/Loading';
 import getMusics from '../services/musicsAPI';
 import MusicCard from '../components/MusicCard';
+import { getFavoriteSongs } from '../services/favoriteSongsAPI';
 
 class Album extends React.Component {
   constructor(props) {
@@ -13,11 +14,18 @@ class Album extends React.Component {
       loading: false,
       loaded: false,
       data: [],
+      favorites: [],
     };
   }
 
   componentDidMount() {
     this.musics();
+    this.favoritesStoraged();
+  }
+
+  favoritesStoraged = async () => {
+    const result = await getFavoriteSongs();
+    this.setState({ favorites: [...result] });
   }
 
   musics = async () => {
@@ -28,7 +36,7 @@ class Album extends React.Component {
   }
 
   render() {
-    const { loading, loaded, data } = this.state;
+    const { loading, loaded, data, favorites } = this.state;
     return (
       <main data-testid="page-album">
         <Header />
@@ -42,7 +50,11 @@ class Album extends React.Component {
             </div>)}
           <section>
             <ul>
-              {loaded && <MusicCard data={ data } /> }
+              {loaded
+                && <MusicCard
+                  data={ data }
+                  favorites={ favorites }
+                />}
             </ul>
           </section>
         </div>
