@@ -23,44 +23,44 @@ class Album extends React.Component {
     this.favoritesStoraged();
   }
 
-  favoritesStoraged = async () => {
-    const result = await getFavoriteSongs();
-    this.setState({ favorites: [...result] });
-  }
+favoritesStoraged = async () => {
+  const result = await getFavoriteSongs();
+  this.setState({ favorites: [...result] });
+}
 
-  musics = async () => {
-    const { match: { params } } = this.props;
-    this.setState({ loading: true, loaded: false });
-    const results = await getMusics(params.id);
-    this.setState({ loading: false, loaded: true, data: results });
-  }
+musics = async () => {
+  const { match: { params } } = this.props;
+  this.setState({ loading: true, loaded: false });
+  const results = await getMusics(params.id);
+  this.setState({ loading: false, loaded: true, data: results });
+}
 
-  render() {
-    const { loading, loaded, data, favorites } = this.state;
-    return (
-      <main data-testid="page-album">
-        <Header />
-        <div>
-          {loading && <Loading />}
-          { loaded && (
-            <div>
-              <img src={ data[0].artworkUrl100 } alt="album" />
-              <h3 data-testid="album-name">{ data[0].collectionName }</h3>
-              <p data-testid="artist-name">{ data[0].artistName }</p>
-            </div>)}
-          <section>
-            <ul>
-              {loaded
-                && <MusicCard
-                  data={ data }
-                  favorites={ favorites }
-                />}
-            </ul>
-          </section>
-        </div>
-      </main>
-    );
-  }
+render() {
+  const { loading, loaded, data, favorites } = this.state;
+  return (
+    <main data-testid="page-album">
+      <Header />
+      <div>
+        {loading && <Loading />}
+        { loaded && (
+          <div>
+            <img src={ data[0].artworkUrl100 } alt="album" />
+            <h3 data-testid="album-name">{ data[0].collectionName }</h3>
+            <p data-testid="artist-name">{ data[0].artistName }</p>
+          </div>)}
+        <section>
+          <ul>
+            {loaded
+&& <MusicCard
+  data={ data }
+  favorites={ favorites }
+/>}
+          </ul>
+        </section>
+      </div>
+    </main>
+  );
+}
 }
 
 Album.propTypes = {
