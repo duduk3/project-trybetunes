@@ -40,7 +40,7 @@ render() {
   const { state } = this;
 
   return (
-    <div>
+    <div data-testid="page-favorites">
       <Header />
       <div>{ loading && <Loading /> }</div>
       <section>
