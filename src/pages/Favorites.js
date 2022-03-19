@@ -28,14 +28,11 @@ changeFavorites = async () => {
 }
 
 handleCheck = async (music) => {
-  const { state } = this;
-  if (state[music.trackId]) {
-    this.setState({ loading: true });
-    await removeSong(music);
-    this.changeFavorites();
-    this.setState({ loading: false });
-    this.setState((prev) => ({ [music.trackId]: !prev[music.trackId] }));
-  }
+  this.setState({ loading: true });
+  await removeSong(music);
+  const favor = await getFavoriteSongs();
+  this.setState((prev) => ({ [music.trackId]: !prev[music.trackId] }));
+  this.setState({ loading: false, fav: [...favor] });
 }
 
 render() {
