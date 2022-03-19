@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
 import { getUser, updateUser } from '../services/userAPI';
@@ -9,6 +10,8 @@ class ProfileEdit extends React.Component {
 
     this.state = {
       loading: false,
+      buttonValidate: true,
+      redirect: false,
       user: {
         name: '',
         email: '',
@@ -38,7 +41,7 @@ class ProfileEdit extends React.Component {
   saveNewUser = async (user) => {
     this.setState({ loading: true });
     await updateUser(user);
-    this.setState({ loading: false });
+    this.setState({ loading: false, redirect: true });
   }
 
   validate = (stringName, stringValue) => {
@@ -50,19 +53,18 @@ class ProfileEdit extends React.Component {
       const currentEmail = stringValue;
       valid = emailRegex.test(currentEmail);
     }
-    console.log(valid);
     if (valid && name !== '' && description !== '' && image !== '') {
-      console.log('botão habilitou');
-      return false;
+      this.setState({ buttonValidate: false });
+    } else {
+      this.setState({ buttonValidate: true });
     }
-    console.log('botão não habilitado');
-    return true;
   }
 
   render() {
-    const { user, loading } = this.state;
+    const { user, loading, buttonValidate, redirect } = this.state;
     return (
       <main data-testid="page-profile-edit">
+        { redirect && <Redirect to="/profile" /> }
         {loading && <Loading />}
         {
           <div>
@@ -97,9 +99,9 @@ class ProfileEdit extends React.Component {
             />
             <button
               type="button"
+              disabled={ buttonValidate }
               data-testid="edit-button-save"
-              onClick={ () => saveNewUser(user) }
-              disabled={ this.validate }
+              onClick={ () => this.saveNewUser(user) }
             >
               Salvar
             </button>
