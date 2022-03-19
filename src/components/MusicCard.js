@@ -14,10 +14,10 @@ class MusicCard extends React.Component {
   }
 
   componentDidMount() {
-    this.chargeFavorites();
+    this.changeFavorites();
   }
 
-chargeFavorites = async () => {
+changeFavorites = async () => {
   this.setState({ loading: true });
   const favor = await getFavoriteSongs();
   this.setState({ loading: false });
